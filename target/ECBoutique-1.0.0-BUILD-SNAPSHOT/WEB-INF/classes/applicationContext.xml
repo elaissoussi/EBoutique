@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:s="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+
+	<bean id="dao" class="com.melaisso.eboutique.dao.BoutiqueDaoImpl" />
+
+	<bean id="metier" class="com.melaisso.eboutique.metier.BoutiqueMetierImpl">
+		<property name="dao" ref="dao"></property>
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/eboutique"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value=""></property>
+	</bean>
+
+	<bean id="persistenceUnitManager"
+		class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+		<property name="defaultDataSource" ref="dataSource"></property>
+	</bean>
+
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitManager" ref="persistenceUnitManager"></property>
+		<property name="persistenceUnitName" value="PU_EBOUTIQUE"></property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<context:annotation-config></context:annotation-config>
+
+
+
+	<!-- Spring Security Configuration -->
+
+	<s:http>
+		<s:intercept-url pattern="/adminProd/**" access="ROLE_ADMIN_PROD" />
+		<s:intercept-url pattern="/adminCat/**" access="ROLE_ADMIN_CAT" />
+		
+		<s:form-login login-page="/login" default-target-url="/produits/index"
+			authentication-failure-url="/login" />
+		<s:logout logout-success-url="/logout" />
+		
+	</s:http>
+	<s:authentication-manager>
+		<s:authentication-provider>
+			<s:password-encoder hash="md5"></s:password-encoder>
+			<s:jdbc-user-service data-source-ref="datasource"
+				users-by-username-query="select userName,password, actived
+						from user where userName=?"
+				authorities-by-username-query="select u.userName, r.roleName from user u, role r
+												where u.id = r.idUser and u.userName =? " />
+												
+			<!-- <s:user-service> <s:user name="admin1" password="admin1" authorities="ROLE_ADMIN_PROD"/> 
+				<s:user name="admin2" authorities="ROLE_ADMIN_CAT,ROLE_ADMIN_PROD" password="admin2" 
+				/> </s:user-service> -->
+		</s:authentication-provider>
+	</s:authentication-manager>
+
+</beans>
+	

@@ -1,22 +1,17 @@
 package com.melaisso.eboutique.entities;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Commande implements Serializable {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long  idCommande ;
+public class Commande extends BaseEntity {
+
+	
 	private Date  dateCommande;
     // commande <--> 0..* ligneCommande	
 	@OneToMany(mappedBy="commande")
@@ -27,12 +22,6 @@ public class Commande implements Serializable {
 	private Client client ;
 	
 	
-	public Long getIdCommande() {
-		return idCommande;
-	}
-	public void setIdCommande(Long idCommande) {
-		this.idCommande = idCommande;
-	}
 	public Date getDateCommande() {
 		return dateCommande;
 	}

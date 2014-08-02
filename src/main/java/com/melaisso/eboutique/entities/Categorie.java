@@ -1,12 +1,8 @@
 package com.melaisso.eboutique.entities;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
@@ -14,30 +10,25 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-public class Categorie implements Serializable{
+public class Categorie extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long idCategorie ;
-	
 	@NotEmpty
-	@Size(min=4,max=30)
-	private String nomCategorie ;
-	private String description ;
-	
+	@Size(min = 4, max = 30)
+	private String nomCategorie;
+	private String description;
+
 	@Lob
-	private byte[] photo ;
-	private String nomPhoto; 
-	// produit * <--> 1 ctegorie categorie dans la classe Produit 
-	@OneToMany(mappedBy="categorie")
-	Collection<Produit> produits ;
-	
+	private byte[] photo;
+	private String nomPhoto;
+	// produit * <--> 1 ctegorie categorie dans la classe Produit
+	@OneToMany(mappedBy = "categorie")
+	Collection<Produit> produits;
+
 	public Categorie() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
 	public Categorie(String nomCategorie, String description, byte[] photo,
 			String nomPhoto) {
 		super();
@@ -47,48 +38,44 @@ public class Categorie implements Serializable{
 		this.nomPhoto = nomPhoto;
 	}
 
-
-
-	public Long getIdCategorie() {
-		return idCategorie;
-	}
-	public void setIdCategorie(Long idCategorie) {
-		this.idCategorie = idCategorie;
-	}
 	public String getNomCategorie() {
 		return nomCategorie;
 	}
+
 	public void setNomCategorie(String nomCategorie) {
 		this.nomCategorie = nomCategorie;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public byte[] getPhoto() {
 		return photo;
 	}
+
 	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
+
 	public String getNomPhoto() {
 		return nomPhoto;
 	}
+
 	public void setNomPhoto(String nomPhoto) {
 		this.nomPhoto = nomPhoto;
 	}
+
 	public Collection<Produit> getProduits() {
 		return produits;
 	}
+
 	public void setProduits(Collection<Produit> produits) {
 		this.produits = produits;
 	}
-	
-	
-	
-	
-	
-	
+
 }

@@ -1,6 +1,5 @@
 package com.melaisso.eboutique.entities;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +8,7 @@ import java.util.Map;
  * @author MELAISSO
  *
  */
-public class Panier implements Serializable {
+public class Panier extends BaseEntity {
 
 	private Map<Long, LigneCommande> items = new HashMap<Long, LigneCommande>();
 
@@ -17,17 +16,17 @@ public class Panier implements Serializable {
 
 	public void addItem(Produit p, int quantite) {
 		LigneCommande lignecommande;
-		if (items.get(p.getIdProduit()) == null) {
+		if (items.get(p.getId()) == null) {
 			lignecommande = new LigneCommande();
 			lignecommande.setProduit(p);
 			lignecommande.setQuantite(quantite);
 			lignecommande.setPrix(p.getPrix());
 
-			items.put(p.getIdProduit(), lignecommande);
+			items.put(p.getId(), lignecommande);
 
 		} else {
 
-			lignecommande = items.get(p.getIdProduit());
+			lignecommande = items.get(p.getId());
 			lignecommande.setQuantite(lignecommande.getQuantite() + quantite);
 		}
 

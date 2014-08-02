@@ -1,12 +1,8 @@
 package com.melaisso.eboutique.entities;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 /**
@@ -15,10 +11,8 @@ import javax.persistence.OneToMany;
  *
  */
 @Entity
-public class User implements Serializable{
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long idUser ;
+public class User extends BaseEntity{
+
 	private String userName ;
 	private String password;
 	private boolean actived ;
@@ -40,12 +34,7 @@ public class User implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Long getIdUser() {
-		return idUser;
-	}
-	public void setIdUser(Long idUser) {
-		this.idUser = idUser;
-	}
+
 
 	public String getUserName() {
 		return userName;

@@ -1,20 +1,16 @@
 package com.melaisso.eboutique.entities;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+
 @Entity
-public class Client implements Serializable{
+public class Client extends BaseEntity {
 
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long idClient ;
+	
 	private String nomClient;
 	private String addresse ;
 	private String email;
@@ -38,14 +34,6 @@ public class Client implements Serializable{
 	public Client() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	public Long getIdClient() {
-		return idClient;
-	}
-
-	public void setIdClient(Long idClient) {
-		this.idClient = idClient;
 	}
 
 	public String getNomClient() {
